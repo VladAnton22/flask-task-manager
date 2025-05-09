@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+    <h1>Your Tasks</h1>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.task_name() }}
+        {% for error in form.task_name.errors %}
+            {{ error }}
+        {% endfor %}
+        {{ form.submit() }}
+    </form>
+{% endblock %}

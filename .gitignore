@@ -1,0 +1,53 @@
+# ============================
+# Python & Flask
+# ============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+*.sqlite3
+instance/
+*.db
+*.log
+*.bak
+
+# Flask cache/metadata
+*.flaskenv
+*.mypy_cache/
+*.pytest_cache/
+
+# ============================
+# Web (Node, Build Tools)
+# ============================
+node_modules/
+dist/
+build/
+.cache/
+.next/
+.vite/
+*.lock
+
+# ============================
+# Editor/IDE
+# ============================
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ============================
+# OS / Misc
+# ============================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.swp
+*.tmp
+
+# ============================
+# Git / Version Control
+# ============================
+*.orig
+*.rej
