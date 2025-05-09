@@ -1,16 +1,19 @@
-from flask import Flask, render_template, session
-from flask_session import Session
-from forms import AddATask
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "this-is-my-secret-key"
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+db = SQLAlchemy()
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    form = AddATask()
-    task_name = form.task_name.data
-    return render_template("index.html", form=form)
+def create_app():
+    app = Flask(__name__, template_folder='templates')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./task_manage.db'
+    app.config["SECRET_KEY"] = "secret-key"
 
+    db.init_app(app)
+
+    from routes import register_routes
+    register_routes(app, db)
+
+    migrate = Migrate(app, db)
+
+    return app
