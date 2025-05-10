@@ -8,12 +8,21 @@
     <body>
         <header>
             <h1><a href="{{ url_for('task.index') }}">Task Manager</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                </ul>
-            </nav>
+            {% if current_user.is_authenticated %}
+                <nav>
+                    <ul>
+                        <li>{{ current_user.name }}</li>
+                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    </ul>
+                </nav>
+            {% else %}
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    </ul>
+                </nav>
+            {% endif %}
         </header>
         <main>
             {% block main_content %}{% endblock %}

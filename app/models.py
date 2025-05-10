@@ -1,9 +1,10 @@
 from app import db
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Integer
+from flask_login import UserMixin
 
 #------Users table------
-class User(db.Model):
+class User(db.Model, UserMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30))
     password_hash: Mapped[str] = mapped_column(nullable=False)
@@ -16,8 +17,5 @@ class User(db.Model):
         from werkzeug.security import check_password_hash
         return check_password_hash(self.password_hash, password)
     
-    def get_id(self):
-        return self.id
-    
     def __repr__(self):
-        return f'User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})'
+        return f'User(id={self.id!r}, name={self.name!r})'

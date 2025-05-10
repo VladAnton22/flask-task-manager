@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from ..forms import AddATask  # relative import
+from flask_login import current_user, login_required
 
 task_bp = Blueprint('task', __name__)
 
