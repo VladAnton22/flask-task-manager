@@ -37,14 +37,11 @@ def login():
             flash("Invalid username or password.", "error")
     return render_template("login.html", form=form)
 
-from flask_login import logout_user
 @auth_bp.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("auth.login"))
-
-
 
 #-----DELETE USER------
 # @auth_bp.route("/delete_user/<username>", methods=["GET"])
