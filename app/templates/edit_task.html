@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-    <h2>Create a Task</h2>
+    <h2>Edit Task</h2>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         {{ form.title.label }}
@@ -24,22 +24,4 @@
         <br />
         {{ form.submit() }}
     </form>
-
-    <h2>Your Tasks</h2>
-    <section>
-        {% for task in tasks %}
-        <div>
-            <p>{{ task.title }}</p>
-            <p>{{ task.due_date }}</p>
-            <p>{{ task.priority_label }}</p>
-            <p>{{ task.status_label }}</p>
-            <a href="{{ url_for('task.edit_task', task_id=task.id) }}">Edit</a>
-            <form action="{{ url_for('task.delete_task', task_id=task.id) }}" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-            <p>{{ task.description }}</p>
-        </div>
-        {% endfor %}
-    </section>
-
 {% endblock %}

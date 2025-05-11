@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, redirect, url_for, session, request, abort
 from ..forms import AddATask  # relative import
 from flask_login import current_user, login_required
 from ..models import Task, User
@@ -33,3 +33,27 @@ def task_management():
 
     return render_template("task_management.html", form=form, tasks=tasks)
 
+@task_bp.route('/edit/<int:task_id>', methods=["GET", "POST"])
+@login_required
+def edit_task(task_id):
+    task = Task.query.get_or_404(task_id)
+
+    if task.user_id != current_user.id:
+        abort(403)
+
+    form = AddATask(obj=task)
+
+    if form.validate_on_submit():
+        form.populate_obj(task)
+        db.session.commit()
+        return redirect(url_for('task.task_management'))
+    
+    return render_template('edit_task.html', form=form, task=task)
+
+@task_bp.route('/delete/<int:task_id>', methods=["POST"])
+@login_required
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('task.task_management'))
