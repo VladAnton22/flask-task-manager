@@ -40,5 +40,15 @@ class Task(db.Model):
 
     user: Mapped["User"] = relationship(back_populates="tasks")
 
+    @property
+    def priority_label(self):
+        PRIORITY_MAP = {1: "Very Low", 2: "Low", 3: "Medium", 4: "High", 5:"Very High"}
+        return PRIORITY_MAP.get(self.priority, "Unknown")
+    
+    @property
+    def status_label(self):
+        STATUS_MAP = {"todo": "To Do", "in_progress": "In Progress", "done": "Done"}
+        return STATUS_MAP.get(self.status, "Unknown")
+
     def __repr__(self):
         return f'Task(id={self.id!r}, title={self.title!r}, description={self.description!r}, due_date={self.due_date!r}, priority={self.priority!r}, status={self.status!r})'

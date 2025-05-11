@@ -29,6 +29,7 @@ def task_management():
         return redirect(url_for("task.index"))
     
     stmt = select(Task).join(Task.user).where(User.name == current_user.name)
-    tasks = db.session.scalars(stmt).all()
+    tasks = db.session.scalars(stmt).all()    
 
     return render_template("task_management.html", form=form, tasks=tasks)
+

@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-
-    <h1>Your Tasks</h1>
-
-
-
-
+    <h2>Create a Task</h2>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         {{ form.title.label }}
@@ -29,4 +24,17 @@
         <br />
         {{ form.submit() }}
     </form>
+
+    <h2>Your Tasks</h2>
+    <section>
+        {% for task in tasks %}
+        <div>
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.due_date }}</p>
+            <p>{{ task.priority_label }}</p>
+            <p>{{ task.status_label }}</p>
+        </div>
+        {% endfor %}
+    </section>
+
 {% endblock %}

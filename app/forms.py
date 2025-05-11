@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, DateField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, DateField, SelectField, TextAreaField
 from wtforms.validators import InputRequired, EqualTo, Optional
 
 class AddATask(FlaskForm):
     title = StringField("Title:", validators=[InputRequired()])
-    description = StringField("Descriptiton:", validators=[Optional()])
+    description = TextAreaField("Descriptiton:", validators=[Optional()])
     due_date = DateField("Due Date:", validators=[Optional()])
     priority = SelectField(
         "Priority",

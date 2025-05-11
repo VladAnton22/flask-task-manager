@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-    <h1>Hello</h1>
+
+    {% if current_user.is_authenticated %}
+        <h2>Hello, {{ current_user.name }}!</h2>
+        <p>Create and view tasks below!</p>
+        <a href="{{ url_for('task.task_management') }}">Your Tasks</a>
+    {% else %}
+        <p>Please log if you want to create tasks</p>
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.register') }}">Register</a>
+
+    {% endif %}
 {% endblock %}
