@@ -42,7 +42,7 @@ class Task(db.Model):
 
     @property
     def priority_label(self):
-        PRIORITY_MAP = {1: "Very Low", 2: "Low", 3: "Medium", 4: "High", 5:"Very High"}
+        PRIORITY_MAP = {1: "Very Low", 2: "Low", 3: "Medium", 4: "High", 5:"Urgent"}
         return PRIORITY_MAP.get(self.priority, "Unknown")
     
     @property

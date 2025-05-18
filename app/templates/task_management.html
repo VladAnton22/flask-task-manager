@@ -1,45 +1,81 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-    <h2>Create a Task</h2>
-    <form action="" method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.title.label }}
-        {{ form.title() }}
-        {% for error in form.title.errors %}
-            {{ error }}
-        {% endfor %}
-        <br />
-        {{ form.description.label }}
-        {{ form.description() }}
-        <br />
-        {{ form.due_date.label }}
-        {{ form.due_date() }}
-        <br />
-        {{ form.priority.label }}
-        {{ form.priority() }}
-        <br />
-        {{ form.status.label }}
-        {{ form.status() }}
-        <br />
-        {{ form.submit() }}
-    </form>
-
-    <h2>Your Tasks</h2>
-    <section>
-        {% for task in tasks %}
-        <div>
-            <p>{{ task.title }}</p>
-            <p>{{ task.due_date }}</p>
-            <p>{{ task.priority_label }}</p>
-            <p>{{ task.status_label }}</p>
-            <a href="{{ url_for('task.edit_task', task_id=task.id) }}">Edit</a>
-            <form action="{{ url_for('task.delete_task', task_id=task.id) }}" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-            <p>{{ task.description }}</p>
-        </div>
-        {% endfor %}
+    <section class="max-w-2xl mx-auto md:bg-card p-6 md:rounded-lg md:shadow-md m-10">
+        <h2 class="text-2xl font-semibold mb-6 text-text-primary">Create a Task</h2>
+        <form action="" method="POST" class="space-y-4">
+            {{ form.hidden_tag() }}
+            <!-- Title -->
+            <div>
+                {{ form.title.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.title(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+                {% for error in form.title.errors %}
+                    <p class="text-sm text-danger mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <!-- Description -->
+             <div>
+                {{ form.description.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.description(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Due Date -->
+             <div>
+                {{ form.due_date.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.due_date(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Priority -->
+             <div>
+                {{ form.priority.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.priority(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Status -->
+             <div>
+                {{ form.status.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.status(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            {{ form.submit(class="py-2 px-4 bg-primary text-background rounded hover:bg-primary-dark transition") }}
+        </form>
     </section>
 
+    
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 mx-4">
+  {% for status in ['To Do', 'In Progress', 'Done'] %}
+    <div class="bg-gray-50 rounded-lg p-4 border border-border shadow">
+      <h3 class="text-lg font-bold mb-4">{{ status }}</h3>
+      <div class="space-y-4">
+        {% for task in tasks if task.status_label == status %}
+          <div class="bg-white p-3 rounded shadow border border-border">
+            <div class="flex justify-between">
+                <h4 class="text-md font-medium">{{ task.title }}</h4>
+                <span class="
+                px-2 py-1 text-xs font-medium rounded-full
+                {% if task.priority_label == 'Urgent' %}
+                    bg-red-100 text-red-800 border border-red-300
+                {% elif task.priority_label == 'High' %}
+                    bg-orange-100 text-orange-800 border border-orange-300	
+                {% elif task.priority_label == 'Medium' %}
+                    bg-yellow-100	text-yellow-800	border border-yellow-300	
+                {% elif task.priority_label == 'Low' %}
+                    bg-green-100 text-green-800 border border-green-300	
+                {% elif task.priority_label == 'Very Low' %}
+                    bg-gray-100	text-gray-800 border border-gray-300	
+                {% endif %}
+                ">
+                    {{ task.priority_label }}
+                </span>
+            </div>
+            <p class="text-sm text-text-secondary">Due: {{ task.due_date }}</p>
+            <p class="text-sm">{{ task.description }}</p>
+            <div class="flex justify-between text-sm mt-2">
+              <a href="{{ url_for('task.edit_task', task_id=task.id) }}" class="text-primary hover:underline">Edit</a>
+              <form action="{{ url_for('task.delete_task', task_id=task.id) }}" method="POST">
+                <button type="submit" class="text-red-500 hover:underline">Delete</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</section>
 {% endblock %}

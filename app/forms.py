@@ -26,7 +26,7 @@ class AddATask(FlaskForm):
         ],
         default="todo"
     )
-    submit = SubmitField("Create Task")
+    submit = SubmitField("Submit")
 
 class RegistrationForm(FlaskForm):
     name = StringField("Username", validators=[InputRequired()])

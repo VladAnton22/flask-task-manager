@@ -1,27 +1,39 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-    <h2>Edit Task</h2>
-    <form action="" method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.title.label }}
-        {{ form.title() }}
-        {% for error in form.title.errors %}
-            {{ error }}
-        {% endfor %}
-        <br />
-        {{ form.description.label }}
-        {{ form.description() }}
-        <br />
-        {{ form.due_date.label }}
-        {{ form.due_date() }}
-        <br />
-        {{ form.priority.label }}
-        {{ form.priority() }}
-        <br />
-        {{ form.status.label }}
-        {{ form.status() }}
-        <br />
-        {{ form.submit() }}
-    </form>
+    <section class="max-w-2xl mx-auto md:bg-card p-6 md:rounded-lg md:shadow-md m-10">
+        <h2 class="text-2xl font-semibold mb-6 text-text-primary">Edit</h2>
+        <form action="" method="POST" class="space-y-4">
+            {{ form.hidden_tag() }}
+            <!-- Title -->
+            <div>
+                {{ form.title.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.title(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+                {% for error in form.title.errors %}
+                    <p class="text-sm text-danger mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <!-- Description -->
+             <div>
+                {{ form.description.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.description(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Due Date -->
+             <div>
+                {{ form.due_date.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.due_date(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Priority -->
+             <div>
+                {{ form.priority.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.priority(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            <!-- Status -->
+             <div>
+                {{ form.status.label(class="block text-sm font-medium text-text-secondary mb-1") }}
+                {{ form.status(class="w-full p-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary") }}
+            </div>
+            {{ form.submit(class="py-2 px-4 bg-primary text-background rounded hover:bg-primary-dark transition") }}
+        </form>
+    </section>
 {% endblock %}
