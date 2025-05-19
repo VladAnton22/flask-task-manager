@@ -26,9 +26,9 @@ def task_management():
         )
         db.session.add(new_task)
         db.session.commit()
-        return redirect(url_for("task.index"))
+        return redirect(url_for("task.task_management"))
     
-    stmt = select(Task).join(Task.user).where(User.name == current_user.name)
+    stmt = select(Task).join(Task.user).order_by(Task.due_date.asc()).where(User.name == current_user.name)
     tasks = db.session.scalars(stmt).all()    
 
     return render_template("task_management.html", form=form, tasks=tasks)
